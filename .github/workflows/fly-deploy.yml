@@ -54,6 +54,8 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
     - name: Bump version and push tag
+      uses: actions/checkout@v2.4.0
+    - name: Tag
       uses: anothrNick/github-tag-action@1.71.0
       env:
         # since it is a third party it needs token for authentication 
