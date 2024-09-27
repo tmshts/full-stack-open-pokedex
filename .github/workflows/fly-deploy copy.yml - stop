@@ -45,8 +45,8 @@ jobs:
         start: npm run start-prod
         wait-on: http://localhost:5000
         
-    - name: Deploy to Fly.io
-      uses: superfly/flyctl-actions/setup-flyctl@master
+    - uses: actions/checkout@v4
+    - uses: superfly/flyctl-actions/setup-flyctl@master
     - run: flyctl deploy --remote-only
       env:
         # in settings in github added FLY_API_TOKEN from Fly
@@ -54,7 +54,30 @@ jobs:
       # only in case of pull request is app deployed 
       if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false') }}
       # added from https://github.com/marketplace/actions/discord-webhook-notify
+      name: Deployed Succeed
+    - uses: rjstone/discord-webhook-notify@v1
+      if: ${{ success() }}
+      with:
+          severity: info
+          username: tmshts
+          color: 'green'
+          description: to https://fullstackopen--pokedex.fly.dev/ by tmshts
+          footer: "Severity: Informational"
+          text: A new version of Pokedex deployed
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
+      name: Deployed Failed
+    - uses: rjstone/discord-webhook-notify@v1
+      if: ${{ failure() }}
+      with:
+          severity: error
+          username: tmshts
+          color: 'red'
+          description: commit
+          details: '${{ toJson(github.event.head_commit.url) }} by tmshts broke the build'
+          footer: "Severity: Error"
+          text: Build failed
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
     
   tag_release:
     # dependency -> run after simple_deployment_pipeline is executed
