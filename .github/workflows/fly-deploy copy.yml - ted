@@ -64,11 +64,11 @@ jobs:
         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
     - name: Deployed Failed
+      uses: discord-actions/message@v2
       if: failure()
-      run: echo "${{ toJson(github.event.commits) }}
-           echo "${{ toJson(github.event.commits.*.url) }}
-
-
+      with:
+        message: 'commit ${{ toJson(github.event.head_commit.url) }} by tmshts broke the build'
+        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
     
   tag_release:
     # dependency -> run after simple_deployment_pipeline is executed
