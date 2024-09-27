@@ -59,11 +59,17 @@ jobs:
       if: ${{ success() }}
       with:
           severity: info
+          run: echo "severity"
           username: tmshts
+          run: echo "username"
           color: 'green'
+          run: echo "color"
           description: to https://fullstackopen--pokedex.fly.dev/ by tmshts
+          run: echo "description"
           footer: "Severity: Informational"
+          run: echo "footer"
           text: A new version of Pokedex deployed
+          run: echo "text"
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
       name: Deployed Failed
