@@ -58,13 +58,16 @@ jobs:
     - name: Deployed Succeed
       # only in case of pull request, false condition and succeeded previous steps, it is notified about the success on discord 
       if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false') && success() }}
-      uses: stegzilla/discord-notify@v2
+      uses: rjstone/discord-webhook-notify@v1
       # run: echo "Deployed Succeed"
       with:
-        title: A new version of Pokedex deployed
-        message: 'to https://fullstackopen--pokedex.fly.dev/ by tmshts'
-        webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+        severity: info
         username: tmshts
+        color: green
+        description: A new version of Pokedex deployed
+        details: 'to https://fullstackopen--pokedex.fly.dev/ by tmshts'
+        footer: 'Severity: Informational'
+        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
     - name: Deployed Failed
       # in case of failure of any previous steps
