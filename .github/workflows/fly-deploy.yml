@@ -52,7 +52,7 @@ jobs:
         # in settings in github added FLY_API_TOKEN from Fly
         FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       # only in case of pull request, false condition and succeeded previous steps, is app deployed 
-      if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false') && success() }}
+      if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false') }}
       # added from https://github.com/marketplace/actions/discord-webhook-notify
 
     - name: Deployed Succeed
