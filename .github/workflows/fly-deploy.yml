@@ -72,12 +72,15 @@ jobs:
     - name: Deployed Failed
       # in case of failure of any previous steps
       if: failure()
-      uses: Poss111/discord-hook-action@v1.6.12
+      uses: rjstone/discord-webhook-notify@v1
       with:
-        title: Build Failed
-        message: commit https://github.com/tmshts/full-stack-open-pokedex/commit/${{ (github.event.after) }} by tmshts broke during check before merging pull request
-        message-color: 'red'
-        discord-hook-url: ${{ secrets.DISCORD_WEBHOOK }}
+        severity: error
+        username: tmshts
+        color: red
+        description: Build Failed
+        details: commit https://github.com/tmshts/full-stack-open-pokedex/commit/${{ (github.event.after) }} by tmshts broke during check before merging pull request
+        footer: 'Severity: Error'
+        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
     
   tag_release:
     # dependency -> run after simple_deployment_pipeline is executed
