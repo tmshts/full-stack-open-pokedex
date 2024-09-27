@@ -69,10 +69,12 @@ jobs:
     - name: Deployed Failed
       # in case of failure of any previous steps
       if: failure()
-      uses: sebastianpopp/discord-action@releases/v2
+      uses: stegzilla/discord-notify@v4
       with:
-        message: Build Failed -> commit https://github.com/tmshts/full-stack-open-pokedex/commit/${{ github.event.after }} by tmshts broke during check before merging pull request
-        webhook: ${{ secrets.DISCORD_WEBHOOK }}
+        title: Build Failed
+        message: commit https://github.com/tmshts/full-stack-open-pokedex/commit/${{ github.event.after }} by tmshts broke during check before merging pull request
+        username: tmshts
+        webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
     
   tag_release:
     # dependency -> run after simple_deployment_pipeline is executed
