@@ -56,11 +56,12 @@ jobs:
       # added from https://github.com/marketplace/actions/discord-webhook-notify
 
     - name: Deployed Succeed
-      if: ${{ success() }}
+      if: success()
       run: echo "Deployed Succeed"
 
+
     - name: Deployed Failed
-      if: ${{ failure() }}
+      if: failure()
       run: echo "Deployed Failed"
     
   tag_release:
