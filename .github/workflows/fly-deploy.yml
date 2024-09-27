@@ -55,18 +55,20 @@ jobs:
       if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false') }}
       # added from https://github.com/marketplace/actions/discord-webhook-notify
 
-    - name: Discord Notify Webhook
-      uses: EDUJOS/ds-webhook@v1.0.0
-      if: success()
-        # run: echo "Deployed Succeed"
+    - name: Deployed Succeed
+      if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false') && success() }}
+      uses: discord-actions/message@v2
+      # run: echo "Deployed Succeed"
       with:
-        webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
-        username: tmshts
-        description: 'to https://fullstackopen--pokedex.fly.dev/ by tmshts'
+        message: 'A new version of Pokedex deployed to https://fullstackopen--pokedex.fly.dev/ by tmshts'
+        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
     - name: Deployed Failed
-      if: failure()
-      run: echo "Deployed Failed"
+      uses: discord-actions/message@v2
+      if:  ${{ (github.event_name == 'push') && (env.CONDITION == 'false') && failure() }}
+      with:
+        message: 'commit ${{ toJson(github.event.head_commit.url) }} by tmshts broke the build'
+        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
     
   tag_release:
     # dependency -> run after simple_deployment_pipeline is executed
