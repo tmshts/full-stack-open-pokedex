@@ -65,7 +65,7 @@ jobs:
 
     - name: Deployed Failed
       uses: discord-actions/message@v2
-      if:  ${{ (github.event_name == 'push') && (env.CONDITION == 'false') && failure() }}
+      if: failure()
       with:
         message: 'commit ${{ toJson(github.event.head_commit.url) }} by tmshts broke the build'
         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
