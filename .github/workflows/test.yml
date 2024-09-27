@@ -5,7 +5,9 @@ on:
     branches:
       - main
 
-
+env:
+  # the below will be 'true'
+  CONDITION: ${{ contains(toJson(github.event.commits.*.message), '#skip') }}
 
 jobs:
   a_test_job:
@@ -22,5 +24,9 @@ jobs:
         run: echo "$COMMITS"
       - name: commit messages
         env:
-          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message[0]) }}
+          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
+      - if: ${{ env.CONDITION == 'true'}}
+        run: echo 'found'
+      - if: ${{ env.CONDITION == 'false'}}
+        run: echo 'not found'
