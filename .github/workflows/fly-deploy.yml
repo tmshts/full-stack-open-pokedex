@@ -56,11 +56,9 @@ jobs:
       # added from https://github.com/marketplace/actions/discord-webhook-notify
 
     - name: Deployed Succeed
-      uses: rjstone/discord-webhook-notify@v1
-      if: ${{ success() }}
-      # run: echo "Deployed Succeed"
-      with:
-        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      if: success()
+      run: echo "Deployed Succeed"
+
 
     - name: Deployed Failed
       if: ${{ failure() }}
