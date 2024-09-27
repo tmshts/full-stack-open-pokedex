@@ -51,24 +51,29 @@ jobs:
       env:
         # in settings in github added FLY_API_TOKEN from Fly
         FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-      # only in case of pull request is app deployed 
-      if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false') }}
+      # only in case of pull request, false condition and succeeded previous steps, is app deployed 
+      if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false') && success() }}
       # added from https://github.com/marketplace/actions/discord-webhook-notify
 
     - name: Deployed Succeed
+      # only in case of pull request, false condition and succeeded previous steps, it is notified about the success on discord 
       if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false') && success() }}
-      uses: discord-actions/message@v2
-      # run: echo "Deployed Succeed"
+      uses: stegzilla/discord-notify@v4
       with:
-        message: 'A new version of Pokedex deployed to https://fullstackopen--pokedex.fly.dev/ by tmshts'
-        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        username: tmshts
+        title: A new version of Pokedex deployed
+        message: 'to https://fullstackopen--pokedex.fly.dev/ by tmshts'
+        webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
 
     - name: Deployed Failed
-      uses: discord-actions/message@v2
-      if:  ${{ (github.event_name == 'push') && (env.CONDITION == 'false') && failure() }}
+      # in case of failure of any previous steps
+      if: failure()
+      uses: stegzilla/discord-notify@v4
       with:
-        message: 'commit ${{ toJson(github.event.head_commit.url) }} by tmshts broke the build'
-        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        username: tmshts
+        title: Build Failed 
+        message: commit https://github.com/tmshts/full-stack-open-pokedex/commit/${{ github.event.after }} by tmshts broke during check before merging pull request
+        webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
     
   tag_release:
     # dependency -> run after simple_deployment_pipeline is executed

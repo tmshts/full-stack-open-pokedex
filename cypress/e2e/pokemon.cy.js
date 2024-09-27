@@ -10,7 +10,7 @@ describe('Pokedex', function() {
   })
 
   it('can navigate to specific pokomeno', function() {
-    cy.contains('ivysaurrr').click()
+    cy.contains('ivysaur').click()
     cy.contains('chlorophyll')
   })
 })
