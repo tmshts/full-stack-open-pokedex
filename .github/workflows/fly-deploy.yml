@@ -61,7 +61,7 @@ jobs:
 
 
     - name: Deployed Failed
-      if: ${{ failure() }}
+      if: failure()
       run: echo "Deployed Failed"
     
   tag_release:
