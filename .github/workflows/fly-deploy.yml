@@ -68,7 +68,7 @@ jobs:
     - name: Deployed Failed
       # in case of failure of any previous steps
       if: failure()
-      run: echo "${{ (github.event) }}"
+      run: echo "${{ toJson(github.event) }}"
     
   tag_release:
     # dependency -> run after simple_deployment_pipeline is executed
