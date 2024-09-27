@@ -54,9 +54,9 @@ jobs:
       # only in case of pull request is app deployed 
       if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false') }}
       # added from https://github.com/marketplace/actions/discord-webhook-notify
-      name: Test Success
+      name: Deployed Succeed
     - uses: rjstone/discord-webhook-notify@v1
-      if: success()
+      if: ${{ success() }}
       with:
           severity: info
           username: tmshts
@@ -66,9 +66,9 @@ jobs:
           text: A new version of Pokedex deployed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
-      name: Test Failure
+      name: Deployed Failed
     - uses: rjstone/discord-webhook-notify@v1
-      if: failure()
+      if: ${{ failure() }}
       with:
           severity: error
           username: tmshts
