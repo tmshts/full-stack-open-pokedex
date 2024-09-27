@@ -8,6 +8,8 @@ on:
 env:
   # the below will be 'true'
   CONDITION: ${{ contains(toJson(github.event.commits.*.message), '#skip') }}
+  COMPARE: 'compare'
+
 
 jobs:
   a_test_job:
@@ -31,6 +33,7 @@ jobs:
       - if: ${{ env.CONDITION == 'false'}}
         run: echo 'not found'
 
+
   dependent_job:
     needs: [a_test_job]
     runs-on: ubuntu-20.04
@@ -38,7 +41,7 @@ jobs:
         - uses: actions/checkout@v4
         - name: github deploy
           run: echo 'test dependent_job'
-        - if: ${{ env.CONDITION == 'true' }}
+        - if: ${{ (env.CONDITION == 'true') && (env.COMPARE == 'compare') }}
           run: echo 'dependent_job executed because of true condition'
         - if: ${{ env.CONDITION == 'false' }}
           run: echo 'dependent_job not executed because of false condition'
