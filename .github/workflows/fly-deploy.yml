@@ -52,7 +52,7 @@ jobs:
         # in settings in github added FLY_API_TOKEN from Fly
         FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       # only in case of pull request is app deployed 
-      if: ${{ (github.event_name == 'push') && (env.CONDITION == 'true')}}
+      if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false')}}
     
   tag_release:
     # dependency -> run after simple_deployment_pipeline is executed
@@ -69,6 +69,6 @@ jobs:
         # bumb the patch versioning
         DEFAULT_BUMP: patch
       # only in case of pull request is app deployed 
-      if: ${{ (github.event_name == 'push') && (env.CONDITION == 'true') }}
+      if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false') }}
       
 
