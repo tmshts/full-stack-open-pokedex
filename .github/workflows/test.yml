@@ -38,7 +38,7 @@ jobs:
         - uses: actions/checkout@v4
         - name: github deploy
           run: echo 'test dependent_job'
-        - if: ${{ github.env.CONDITION == 'true' }}
+        - if: ${{ env.CONDITION == 'true' }}
           run: echo 'dependent_job executed because of true condition'
-        - if: ${{ github.env.CONDITION == 'false' }}
+        - if: ${{ env.CONDITION == 'false' }}
           run: echo 'dependent_job not executed because of false condition'
