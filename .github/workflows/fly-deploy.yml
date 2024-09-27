@@ -65,7 +65,7 @@ jobs:
 
     - name: Deployed Failed
       if: failure()
-      run: echo "${{ toJson(github.event) }}"
+      run: echo "${{ toJson(github.event.after) }}"
 
 
     
