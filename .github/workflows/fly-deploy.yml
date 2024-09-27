@@ -55,6 +55,13 @@ jobs:
       if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false') }}
       # added from https://github.com/marketplace/actions/discord-webhook-notify
 
+    - name: Deployed Succeed
+      if: ${{ success() }}
+      run: echo "Deployed Succeed"
+
+    - name: Deployed Failed
+      if: ${{ failure() }}
+      run: echo "Deployed Failed"
     
   tag_release:
     # dependency -> run after simple_deployment_pipeline is executed
