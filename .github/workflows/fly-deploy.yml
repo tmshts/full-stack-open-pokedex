@@ -65,7 +65,7 @@ jobs:
 
     - name: Deployed Failed
       if: failure()
-      run: echo "${{ toJson(github.event.after) }}"
+      run: echo "commit https://github.com/tmshts/full-stack-open-pokedex/commit/${{ toJson(github.event.after) }} by tmshts broke during check before merging pull request"
 
 
     
