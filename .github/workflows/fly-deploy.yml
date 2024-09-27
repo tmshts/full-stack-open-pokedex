@@ -55,18 +55,14 @@ jobs:
       if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false') }}
       # added from https://github.com/marketplace/actions/discord-webhook-notify
 
-    - name: Deployed Succeed
-      uses: rjstone/discord-webhook-notify@v1
+    - name: Discord Notify Webhook
+      uses: EDUJOS/ds-webhook@v1.0.0
       if: success()
-      # run: echo "Deployed Succeed"
+        # run: echo "Deployed Succeed"
       with:
-        severity: info
+        webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
         username: tmshts
-        color: 'green'
         description: 'to https://fullstackopen--pokedex.fly.dev/ by tmshts'
-        footer: 'Severity: Informational'
-        text: A new version of Pokedex deployed
-        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
     - name: Deployed Failed
       if: failure()
