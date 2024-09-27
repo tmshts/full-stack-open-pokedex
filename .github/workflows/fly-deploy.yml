@@ -71,7 +71,6 @@ jobs:
       if: failure()
       uses: discord-actions/message@v2
       with:
-        username: tmshts
         message: Build Failed -> commit https://github.com/tmshts/full-stack-open-pokedex/commit/${{ (github.event.after) }} by tmshts broke during check before merging pull request
         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
     
