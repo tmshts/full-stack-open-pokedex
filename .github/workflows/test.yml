@@ -41,7 +41,7 @@ jobs:
         - uses: actions/checkout@v4
         - name: github deploy
           run: echo 'test dependent_job'
-        - if: ${{ (env.CONDITION == 'true') && (env.COMPARE == 'compare') }}
-          run: echo 'dependent_job executed because of true condition'
+        - if: ${{ (env.CONDITION == 'true') && (env.COMPARE == 'no compare') }}
+          run: echo 'despite fulfulling condition, not executed due to compare'
         - if: ${{ env.CONDITION == 'false' }}
           run: echo 'dependent_job not executed because of false condition'
