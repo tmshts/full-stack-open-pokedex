@@ -30,6 +30,11 @@ jobs:
           COMMITS: ${{ toJson(github.event.commits.*.url) }}
         run: echo "$COMMITS"
 
+      - name: commits url 1
+        env:
+          COMMITS: ${{ toJson(github.event.commits.*.url[0]) }}
+        run: echo "$COMMITS"
+
       - name: commit messages
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
