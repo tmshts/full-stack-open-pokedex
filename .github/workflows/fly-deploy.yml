@@ -92,5 +92,5 @@ jobs:
         DEFAULT_BUMP: patch
       # only in case of pull request is app deployed 
       if: ${{ (github.event_name == 'push') && (env.CONDITION == 'false') }}
-      
+
       
