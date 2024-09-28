@@ -3,10 +3,8 @@
 name: Ping
 
 on:
-  # trigger on push
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: "59 6 * * *"
 
 jobs:
     ping:
